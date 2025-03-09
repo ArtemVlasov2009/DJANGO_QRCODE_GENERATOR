@@ -250,6 +250,74 @@
 
 ---
 
+### Моделі даних
+Ці моделі, розташовані у файлі `home/models.py`, визначають структуру даних для користувачів, підписок і QR-кодів у базі даних SQLite3.
+
+#### Модель `Subscribers`
+- **Мета**: Зберігає інформацію про підписників, їхній план і кількість створених QR-кодів.  
+- **Поля**:  
+  - `user`: зв’язок один до одного з моделлю `User` (автентифікація Django).  
+  - `subscriber`: ім’я підписника (рядок).  
+  - `qr_code_count`: кількість створених QR-кодів (ціле число, за замовчуванням 0).  
+  - `plan`: тип підписки (рядок, за замовчуванням "free").  
+  - `qr_code_limit`: максимальна кількість QR-кодів для плану (ціле число, за замовчуванням 10).  
+  - `balance`: баланс користувача (десяткове число, за замовчуванням 0.00).  
+- **Приклад коду**:  
+  ```python
+  from django.db import models
+  from django.contrib.auth.models import User
+
+  class Subscribers(models.Model):
+      user = models.OneToOneField(User, on_delete=models.CASCADE)
+      subscriber = models.CharField(max_length=255)
+      qr_code_count = models.IntegerField(default=0)
+      plan = models.CharField(max_length=10, default='free')
+      qr_code_limit = models.IntegerField(default=10)
+      balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+      def __str__(self):
+          return self.subscriber
+  ```
+
+#### Модель `qr_code`
+- **Мета**: Зберігає інформацію про кожен згенерований QR-код, включаючи його параметри та зв’язок із користувачем.  
+- **Поля**:  
+  - `user`: зв’язок із моделлю `User` (зовнішній ключ, може бути null).  
+  - `name`: назва QR-коду (рядок, може бути null).  
+  - `link`: URL або текст для QR-коду (рядок, за замовчуванням локальний URL).  
+  - `size`: розмір QR-коду в пікселях (ціле число, за замовчуванням 300).  
+  - `shape`: форма (ціле число, 0 — квадрат, 1 — заокруглений).  
+  - `custom_style`: стиль оформлення (рядок, за замовчуванням "default").  
+  - `data_create`: дата створення (дата і час, за замовчуванням поточний час).  
+  - `expiry_date`: дата закінчення терміну дії (число з плаваючою точкою, за замовчуванням поточний час у секундах).  
+  - `image`: шлях до зображення QR-коду (рядок, може бути null).  
+  - `plan_created`: план, за яким створено QR-код (рядок, за замовчуванням "free").  
+- **Приклад коду**:  
+  ```python
+  from django.db import models
+  from django.contrib.auth.models import User
+  from django.utils import timezone  
+  import time
+
+  class qr_code(models.Model):
+      user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+      name = models.CharField(max_length=255, null=True, blank=True)
+      link = models.URLField(max_length=2000, default='http://127.0.0.1:8000/')
+      size = models.IntegerField(default=300)
+      shape = models.IntegerField(default=0)
+      custom_style = models.CharField(max_length=50, default="default")
+      data_create = models.DateTimeField(default=timezone.now, null=False)
+      expiry_date = models.FloatField(default=time.time)
+      image = models.CharField(max_length=500, null=True, blank=True)
+      plan_created = models.CharField(max_length=50, default="free")
+
+      def __str__(self):
+          return self.name or "Unnamed QR Code"
+  ```
+
+---
+
+
 ## Як запустити проєкт
 
 ### Локально на комп’ютері
