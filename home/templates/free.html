@@ -1,0 +1,164 @@
+{% load static %}
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сторінка генерації</title>
+    <link rel="stylesheet" href="{% static 'css/free.css' %}">
+    <link rel="icon" href="{% static 'images/Logo.png' %}" type="image/png">
+    <style>
+        .blocked-text {
+            color: #FF6F61;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            text-align: center;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <header class="header_main">
+        <a class='home_url' href="http://127.0.0.1:8000/home_auth">
+            <img class="Logo_img" src="{% static 'images/Logo.png' %}" alt="Logo" />
+        </a>
+        <a href="http://127.0.0.1:8000/home_auth" class="{% if request.path == '/' %}current-page{% endif %}">Головна</a>
+        <a href="{% url 'generator' %}" class="{% if request.path == '/generator/' %}current-page{% endif %}">Кодогенерація</a>
+        <a href="{% url 'history_generations' %}" class="{% if request.path == '/history_generations/' %}current-page{% endif %}">Генерації</a>
+        <a href="{% url 'contacts' %}" class="{% if request.path == '/contacts/' %}current-page{% endif %}">Контакти</a>
+        <div class="logout">
+            <a class="logout_кнопка" href="{% url 'logout' %}">Вийти: {{ request.user.username }}</a>
+        </div>
+    </header>
+    <div class="Generator_frame">
+        <div class="Generator_header">
+            <p>Згенеруйте ваш QR code</p>
+        </div>
+        <div class="Generator_internal_frame">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="name">Ім'я:</label>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="link_or_text">Посилання або текст:</label>
+                <input type="text" id="link_or_text" name="link_or_text" required><br><br>
+                <label for="size">Розмір генерації QR-коду:</label>
+                <select id="size" name="size">
+                    <option value="200">200x200</option>
+                    <option value="300">300x300</option>
+                    <option value="400">400x400</option>
+                    <option value="500">500x500</option>
+                </select><br><br>
+                <label for="qr_color"><span class="blocked-text">Колір QR-коду<br>(заблоковано, потрібно оформити вищу підписку):</span></label>
+                <input type="color" id="qr_color" name="qr_color" value="#000000" disabled><br><br>
+                <label for="bg_color"><span class="blocked-text">Колір фону<br>(заблоковано, потрібно оформити вищу підписку):</span></label>
+                <input type="color" id="bg_color" name="bg_color" value="#FFFFFF" disabled><br><br>
+                <label for="logo"><span class="blocked-text">Додати логотип<br>(заблоковано, потрібно оформити вищу підписку):</span></label>
+                <input type="file" id="logo" name="logo" accept="image/*" disabled><br><br>
+                <label for="gradient"><span class="blocked-text">Налаштувати градієнт<br>(заблоковано, потрібно оформити вищу підписку):</span></label>
+                <input type="checkbox" id="gradient" name="gradient" disabled><br><br>
+                <div id="gradient-colors" style="display: none;">
+                    <label for="color1"><span class="blocked-text">Колір 1 градієнту<br>(заблоковано, потрібно оформити вищу підписку):</span></label>
+                    <input type="color" id="color1" name="color1" value="#ff0000" disabled><br><br>
+                    <label for="color2"><span class="blocked-text">Колір 2 градієнту<br>(заблоковано, потрібно оформити вищу підписку):</span></label>
+                    <input type="color" id="color2" name="color2" value="#00ff00" disabled><br><br>
+                </div>
+                <label for="shape"><span class="blocked-text">Форма QR-коду<br>(заблоковано, потрібно оформити вищу підписку):</span></label><br>
+                <label>
+                    <input type="radio" name="shape" value="rounded" checked disabled>
+                    З закругленими кутами
+                </label><br>
+                <label>
+                    <input type="radio" name="shape" value="square" disabled>
+                    Квадратна форма
+                </label><br><br>
+                <label for="element_shape"><span class="blocked-text">Форма елементів QR-коду<br>(заблоковано, потрібно оформити вищу підписку):</span></label><br>
+                <label>
+                    <input type="radio" name="element_shape" value="circle" checked disabled>
+                    Кружки
+                </label><br>
+                <label>
+                    <input type="radio" name="element_shape" value="triangle" disabled>
+                    Трикутники
+                </label><br>
+                <label>
+                    <input type="radio" name="element_shape" value="square" disabled>
+                    Квадрати
+                </label><br><br>
+                <button class="Buttom_Down" type="submit">Генерувати</button>
+            </form>
+            <div class="qr-code-overlay">
+                <h2>Ваш QR-код:</h2>
+                <div style="width: 200px; height: 200px; overflow: hidden;">
+                    {% if qr_image_url %}
+                        <img src="{{ qr_image_url }}" alt="QR-код" id="qr-code-img" style="width: 200px; height: 200px; object-fit: contain;">
+                    {% else %}
+                        <img src="{% static 'images/qrCodeExample.png' %}" alt="Placeholder" id="qr-code-placeholder" style="width: 200px; height: 200px; object-fit: contain;">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для отображения сообщения о лимите -->
+    <div id="limitModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="limitMessage"></p>
+        </div>
+    </div>
+
+    <!-- Скрипт для управления модальным окном -->
+    <script>
+        // Получаем модальное окно и кнопку закрытия
+        var modal = document.getElementById("limitModal");
+        var span = document.getElementsByClassName("close")[0];
+
+        // Функция для отображения модального окна с сообщением
+        function showLimitModal(message) {
+            document.getElementById("limitMessage").innerText = message;
+            modal.style.display = "block";
+        }
+
+        // Закрытие модального окна при клике на крестик
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Закрытие модального окна при клике вне его области
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Проверяем, нужно ли показать модальное окно при загрузке страницы
+        {% if show_limit_modal %}
+            showLimitModal("Ви досягли ліміту генерації QR-кодів для безкоштовного тарифу.");
+        {% endif %}
+    </script>
+    
+</body>
+</html>

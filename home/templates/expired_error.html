@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR-код просрочен</title>
+</head>
+<body>
+    <h1>Ошибка: QR-код просрочен</h1>
+    <p>К сожалению, срок действия этого QR-кода истек.</p>
+    <p><strong>Название:</strong> {{ qr.name }}</p>
+    <p><strong>Дата создания:</strong> {{ qr.data_create }}</p>
+    <p><strong>Срок действия до:</strong> {{ qr.expiry_date|date:"Y-m-d H:i:s" }}</p>
+    <p>Пожалуйста, создайте новый QR-код или обратитесь к администратору.</p>
+    <a href="{% url 'history_gen' %}">Вернуться к истории</a>
+</body>
+</html>
