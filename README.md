@@ -1,7 +1,3 @@
-Ось оновлена версія вашого README.md, яка відповідає зазначеним вимогам. Я реорганізував вміст, додав деталі та структурував його відповідно до вашого запиту.
-
----
-
 # Генератор QR-кодів
 
 ## Мета створення проєкту та його користь для користувача
@@ -122,10 +118,6 @@
   </form>
   ```
 
-Ось оновлений фрагмент вашого README.md із заміненим кодом у секції для `free.html`. Я вставив ваш Python-код замість попереднього HTML-прикладу:
-
----
-
 ### 4. `free.html`, `standard.html`, `pro.html`, `desktop.html` — Сторінки генерації QR-кодів
 - **Мета**: Генерація QR-кодів залежно від обраного плану підписки.  
 - **Особливості**:  
@@ -139,50 +131,31 @@
 - **Приклад коду** (генерація у `free`):  
   ```python
   def render_free(request: HttpResponse):
-      # Перевірка, чи користувач авторизований
       if not request.user.is_authenticated:
-          return redirect("authorization")  # Перенаправлення на сторінку авторизації, якщо не авторизований
-
-      # Отримання або створення профілю підписника для поточного користувача
+          return redirect("authorization")
       subscriber, created = Subscribers.objects.get_or_create(user=request.user)
-
-      # Перевірка ліміту QR-кодів для безкоштовного плану
       if subscriber.plan == 'free' and subscriber.qr_code_count >= 1:
-          return render(request, "free.html", {"show_limit_modal": True})  # Відображення модального вікна з повідомленням про ліміт
-
-      # Обробка POST-запиту (створення QR-коду)
+          return render(request, "free.html", {"show_limit_modal": True})
       if request.method == "POST":
-          # Отримання даних з форми
-          name = request.POST.get("name")  # Ім'я QR-коду
-          link = request.POST.get("link_or_text")  # Посилання або текст для QR-коду
-          size = int(request.POST.get("size", 300))  # Розмір QR-коду (за замовчуванням 300)
-          qr_color = request.POST.get("qr_color", "#000000")  # Колір QR-коду (за замовчуванням чорний)
-          bg_color = request.POST.get("bg_color", "#FFFFFF")  # Колір фону (за замовчуванням білий)
-          logo_file = request.FILES.get("logo")  # Файл логотипу (опціонально)
-          use_gradient = request.POST.get("gradient") == "on"  # Використовувати градієнт (так/ні)
-          color1 = request.POST.get("color1", "#ff0000")  # Перший колір градієнту (за замовчуванням червоний)
-          color2 = request.POST.get("color2", "#00ff00")  # Другий колір градієнту (за замовчуванням зелений)
-          shape = request.POST.get("shape", "square")  # Форма QR-коду (за замовчуванням квадрат)
-          round_corners = shape == "rounded"  # Чи заокруглені кути (так/ні)
-          element_shape = request.POST.get("element_shape", "square")  # Форма елементів
-
-          # Перевірка на заповненість обов'язкових полів
+          name = request.POST.get("name")
+          link = request.POST.get("link_or_text")
+          size = int(request.POST.get("size", 300))
+          qr_color = request.POST.get("qr_color", "#000000")
+          bg_color = request.POST.get("bg_color", "#FFFFFF")
+          logo_file = request.FILES.get("logo")
+          use_gradient = request.POST.get("gradient") == "on"
+          color1 = request.POST.get("color1", "#ff0000")
+          color2 = request.POST.get("color2", "#00ff00")
+          shape = request.POST.get("shape", "square")
+          round_corners = shape == "rounded"
+          element_shape = request.POST.get("element_shape", "square")
           if not name or not link:
-              return render(request, "free.html", {"error": "Заповніть всі поля"})  # Повідомлення про помилку
-
+              return render(request, "free.html", {"error": "Заповніть всі поля"})
           try:
-              # Генерація QR-коду
-              qr = qrcode.QRCode(
-                  version=1,
-                  error_correction=qrcode.constants.ERROR_CORRECT_H,
-                  box_size=10,
-                  border=4,
-              )
-              qr.add_data(link)  # Додавання даних (посилання/текст) до QR-коду
-              qr.make(fit=True)  # Автоматичне налаштування розміру
-              img = qr.make_image(fill_color=qr_color, back_color=bg_color).convert("RGBA")  # Створення зображення QR-коду
-
-              # Зміна форми елементів QR-кода (кола, трикутники)
+              qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_H, box_size=10, border=4)
+              qr.add_data(link)
+              qr.make(fit=True)
+              img = qr.make_image(fill_color=qr_color, back_color=bg_color).convert("RGBA")
               if element_shape == "circle":
                   mask = Image.new("L", img.size, 0)
                   draw = ImageDraw.Draw(mask)
@@ -199,8 +172,6 @@
                           box = [(x, y + qr.box_size), (x + qr.box_size // 2, y), (x + qr.box_size, y + qr.box_size)]
                           draw.polygon(box, fill=255)
                   img.putalpha(mask)
-
-              # Застосування градієнту
               if use_gradient:
                   gradient = Image.new("RGBA", img.size)
                   draw = ImageDraw.Draw(gradient)
@@ -218,10 +189,7 @@
                       else:
                           new_data.append((255, 255, 255, 0))
                   img.putdata(new_data)
-
-              img = img.resize((size, size), Image.Resampling.LANCZOS)  # Зміна розміру зображення
-
-              # Заокруглення кутів
+              img = img.resize((size, size), Image.Resampling.LANCZOS)
               if round_corners:
                   corner_radius = int(size * 0.1)
                   qr_mask = Image.new('L', img.size, 0)
@@ -231,38 +199,30 @@
                   output = Image.new('RGBA', img.size, (0, 0, 0, 0))
                   output.paste(img, mask=qr_mask)
                   img = output
-
-              # Додавання логотипу
               if logo_file:
                   try:
-                      logo = Image.open(logo_file).convert("RGBA")  # Відкриття та конвертація логотипу
-                      logo_size = int(size * 0.25)  # Розмір логотипу (25% від розміру QR-коду)
-                      logo = logo.resize((logo_size, logo_size), Image.Resampling.LANCZOS)  # Зміна розміру логотипу
-                      pos_x = (size - logo_size) // 2  # Позиція логотипу по X
-                      pos_y = (size - logo_size) // 2  # Позиція логотипу по Y
+                      logo = Image.open(logo_file).convert("RGBA")
+                      logo_size = int(size * 0.25)
+                      logo = logo.resize((logo_size, logo_size), Image.Resampling.LANCZOS)
+                      pos_x = (size - logo_size) // 2
+                      pos_y = (size - logo_size) // 2
                       logo_bg = Image.new('RGBA', (logo_size, logo_size), (255, 255, 255, 255))
                       img.paste(logo_bg, (pos_x, pos_y))
-                      img.paste(logo, (pos_x, pos_y), logo)  # Вставка логотипу в центр QR-коду
+                      img.paste(logo, (pos_x, pos_y), logo)
                   except Exception as e:
-                      print(f"Error processing logo: {e}")  # Виведення помилки
-
-              # Збереження QR-коду
+                      print(f"Error processing logo: {e}")
               buffer = BytesIO()
-              img.save(buffer, format="PNG")  # Збереження зображення у буфер
-              user_folder = os.path.join(settings.MEDIA_ROOT, request.user.username)  # Шлях до папки користувача
+              img.save(buffer, format="PNG")
+              user_folder = os.path.join(settings.MEDIA_ROOT, request.user.username)
               if not os.path.exists(user_folder):
-                  os.makedirs(user_folder)  # Створення папки користувача, якщо її не існує
-              file_path = os.path.join(user_folder, f"{name}.png")  # Повний шлях до файлу
+                  os.makedirs(user_folder)
+              file_path = os.path.join(user_folder, f"{name}.png")
               with open(file_path, 'wb') as f:
-                  f.write(buffer.getvalue())  # Запис зображення з буфера у файл
-              qr_image_url = os.path.join(settings.MEDIA_URL, request.user.username, f"{name}.png")  # URL зображення
-
-              # Перевірка на унікальність імені QR-коду
+                  f.write(buffer.getvalue())
+              qr_image_url = os.path.join(settings.MEDIA_URL, request.user.username, f"{name}.png")
               if qr_code.objects.filter(name=name).exists():
-                  return render(request, "free.html", {"error": "QR-код із таким ім'ям вже існує"})  # Повідомлення про помилку
-
+                  return render(request, "free.html", {"error": "QR-код із таким ім'ям вже існує"})
               creation_time = timezone.now() + timedelta(hours=2)
-              # Збереження інформації про QR-код в базі даних
               qr_code_instance = qr_code(
                   name=name,
                   link=link,
@@ -272,27 +232,18 @@
                   data_create=creation_time,
                   expiry_date=(creation_time + timedelta(days=30)).timestamp(),
                   image=qr_image_url,
-                  plan_created="free",  # Вказуємо, що QR-код створено за безкоштовним планом
-                  user=request.user  # Вказуємо користувача, який створив QR-код
+                  plan_created="free",
+                  user=request.user
               )
-              qr_code_instance.save()  # Збереження об'єкта в базі даних
-
-              # Збільшення лічильника QR-кодів у профілі підписника
+              qr_code_instance.save()
               subscriber.qr_code_count += 1
-              subscriber.save()  # Збереження змін у профілі підписника
-
-              # Відображення QR-коду на сторінці
+              subscriber.save()
               return render(request, "free.html", {"qr_image_url": qr_image_url})
-
           except Exception as e:
-              print(f"Error generating QR code: {e}")  # Виведення помилки
-              return render(request, "free.html", {"error": "Помилка при генерації QR-коду"})  # Повідомлення про помилку
-
-      # Відображення сторінки free.html (при GET-запиті або після обробки POST-запиту)
+              print(f"Error generating QR code: {e}")
+              return render(request, "free.html", {"error": "Помилка при генерації QR-коду"})
       return render(request, "free.html")
   ```
-
-Цей код демонструє повний процес генерації QR-коду для сторінки `free.html`, включаючи перевірку авторизації, обробку форм, кастомізацію (градієнти, форми елементів, заокруглення кутів, логотипи) та збереження результату. Якщо вам потрібні додаткові пояснення чи зміни — дайте знати!
 - **Принцип роботи підписок**:  
   - Кожен план має ліміт QR-кодів (`qr_code_limit` у моделі `Subscribers`).  
   - При генерації перевіряється поточна кількість (`qr_code_count`) та доступність функцій.  
