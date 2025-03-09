@@ -1,444 +1,356 @@
-# Генератор QR-кодів
-
-Ласкаво просимо до документації нашого проекту — інноваційного генератора QR-кодів, який поєднує простоту використання з широкими можливостями кастомізації. Цей проект створений командою ентузіастів, які прагнули розробити зручний інструмент для генерації QR-кодів із підтримкою різних планів підписки та інтуїтивним інтерфейсом.
+Ось оновлена версія вашого README.md, яка відповідає зазначеним вимогам. Я реорганізував вміст, додав деталі та структурував його відповідно до вашого запиту.
 
 ---
 
-## Список учасників команди
+# Генератор QR-кодів
 
-Наша команда складається з талановитих розробників, кожен із яких зробив свій внесок у створення цього проекту:
+## Мета створення проєкту та його користь для користувача
+
+**Генератор QR-кодів** — це інноваційний веб-додаток, створений для спрощення процесу генерації QR-кодів із широкими можливостями кастомізації. Наша мета — надати користувачам простий, інтуїтивний і водночас потужний інструмент для створення унікальних QR-кодів, які можна адаптувати під різні потреби: від простих посилань до складних дизайнів із логотипами та градієнтами.  
+
+Проєкт корисний для:  
+- **Індивідуальних користувачів**: швидко створювати QR-коди для особистих посилань чи тексту.  
+- **Бізнесу**: генерувати брендовані QR-коди з логотипами та унікальним дизайном для маркетингу.  
+- **Розробників**: досліджувати приклад реалізації веб-додатку на Django з інтеграцією бази даних і кастомізацією.  
+
+Завдяки гнучким планам підписки (Free, Standard, Pro, Desktop) користувачі можуть обрати функціонал, який відповідає їхнім потребам, від базового до професійного рівня.
+
+---
+
+## План-навігація по README
+
+1. [Назва проєкту](#генератор-qr-кодів)  
+2. [Мета створення проєкту та його користь](#мета-створення-проєкту-та-його-користь-для-користувача)  
+3. [План-навігація по README](#план-навігація-по-readme)  
+4. [Склад команди розробників](#склад-команди-розробників)  
+5. [Посилання на Figma-дизайн та FigJam](#посилання-на-figma-дизайн-та-figjam)  
+6. [Структура проєкту](#структура-проєкту)  
+7. [Детальна специфікація застосунків](#детальна-специфікація-застосунків)  
+8. [Як запустити проєкт](#як-запустити-проєкт)  
+9. [Висновки](#висновки)  
+
+---
+
+## Склад команди розробників
+
+Наша команда складається з трьох талановитих учасників, кожен із яких вніс унікальний внесок у проєкт:  
 
 - **Артем Власов (Team Lead)**  
-  - Роль: Керівник команди, координатор розробки, фронтенд-розробник, дизайнер інтерфейсу.  
-  - Профіль: [GitHub - ArtemVlasov2009](https://github.com/ArtemVlasov2009)  
-  - Відповідальний за архітектуру проекту та основний функціонал.
+  - Роль: Керівник команди, фронтенд-розробник, дизайнер інтерфейсу.  
+  - GitHub: [ArtemVlasov2009](https://github.com/ArtemVlasov2009)  
+  - Відповідальність: архітектура проєкту, дизайн, основний функціонал.  
 
 - **Ткач Богдан**  
   - Роль: Бекенд-розробник, спеціаліст із баз даних.  
-  - Профіль: [GitHub - Bogdantkach12](https://github.com/Bogdantkach12)  
-  - Налаштував роботу з базою даних та логіку генерації QR-кодів.
+  - GitHub: [Bogdantkach12](https://github.com/Bogdantkach12)  
+  - Відповідальність: логіка генерації QR-кодів, робота з базою даних SQLite3.  
 
 - **Іван Єжов**  
   - Роль: Фронтенд-розробник, дизайнер інтерфейсу.  
-  - Профіль: [GitHub - EzhovIvan](https://github.com/EzhovIvan)  
-  - Розробив стильний та зручний дизайн сторінок.
+  - GitHub: [EzhovIvan](https://github.com/EzhovIvan)  
+  - Відповідальність: стильний дизайн сторінок, інтерактивні елементи.  
 
 ---
 
-## Що робить наш проект
+## Посилання на Figma-дизайн та FigJam
 
-### Основна ідея
+- **Figma-дизайн**:  
+  [Figma - QR Code Generator Project](https://www.figma.com/design/DdHVri8QFYcHu0aAtPD0YH/QR-Code-Generator-Project?node-id=223-92&t=ud8Q13eHWrrlpWDk-0)  
+  Прототип дизайну інтерфейсу, який відображає структуру та стиль сторінок.  
 
-**Наш проект — це гнучкий генератор QR-кодів**, який дозволяє користувачам створювати унікальні QR-коди з різними параметрами та стилями. Ми розробили інструмент, який підходить як для простих задач (наприклад, створення QR-коду для посилання), так і для більш складних сценаріїв із кастомізацією дизайну та підтримкою платних підписок.
-
-### Ключові можливості
-
-- **Генерація QR-кодів**: Створюйте QR-коди для посилань, тексту чи інших даних.  
-- **Кастомізація**: Налаштовуйте розмір, кольори, форму та навіть додавайте логотипи чи градієнти.  
-- **Плани підписки**: Доступні різні рівні — Free, Standard, Pro та Desktop — із різними лімітами та функціями.  
-- **Реєстрація та авторизація**: Захищений доступ до персоналізованих функцій.  
-- **Історія генерацій**: Переглядайте та керуйте створеними QR-кодами.
+- **FigJam**:  
+  [FigJam](https://raw.githubusercontent.com/ArtemVlasov2009/DJANGO_QRCODE_GENERATOR/main/img_figjam/FigJam.png)  
+  Схема планування проєкту, яка допомогла нам організувати задачі та ідеї.  
 
 ---
 
-## Технології, які ми використовуємо
+## Структура проєкту
 
-Для створення цього проекту ми застосували сучасний стек технологій, що забезпечує стабільність, швидкість і зручність розробки:
-
-- **Django**  
-  - **Опис**: Потужний Python-фреймворк для веб-розробки.  
-  - **Використання**: Служить основою проекту, відповідає за маршрутизацію, логіку та рендеринг сторінок.
-
-- **SQLite3**  
-  - **Опис**: Легка реляційна база даних, вбудована в Python.  
-  - **Використання**: Зберігає дані користувачів, підписки та історію QR-кодів у компактному файлі.
-
-- **Requests**  
-  - **Опис**: Бібліотека для роботи з HTTP-запитами.  
-  - **Використання**: Обробляє зовнішні запити, наприклад, для перевірки посилань.
-
-- **GitHub**  
-  - **Опис**: Платформа для контролю версій і спільної роботи.  
-  - **Використання**: Ми використовували GitHub для зберігання коду, відстеження змін і командної співпраці.
-
-- **PIL (Python Imaging Library)**  
-  - **Опис**: Бібліотека для роботи із зображеннями.  
-  - **Використання**: Генерує та редагує QR-коди, додає стилі та логотипи.
-
-- **HTML, CSS, JavaScript**  
-  - **Опис**: Базові технології веб-розробки.  
-  - **Використання**:  
-    - **HTML**: Структура сторінок.  
-    - **CSS**: Стилізація інтерфейсу для привабливого вигляду.  
-    - **JavaScript**: Динамічні елементи, наприклад, показ/приховування опцій градієнту.
+Проєкт побудований на фреймворку **Django** і складається з кількох ключових компонентів:  
+- **`manage.py`**: основний файл для запуску серверу та управління проєктом.  
+- **`home/views.py`**: логіка відображення сторінок і обробки запитів.  
+- **`home/models.py`**: моделі даних для користувачів і QR-кодів.  
+- **`home/urls.py`**: маршрутизація URL-адрес.  
+- **`templates/`**: HTML-шаблони для сторінок (base.html, registration.html тощо).  
+- **`static/`**: статичні файли (CSS, JS, зображення).  
+- **`media/`**: збережені зображення QR-кодів.  
+- **`db.sqlite3`**: база даних проєкту.  
 
 ---
 
-Цей набір технологій дозволив нам створити швидкий, надійний і користувацьки орієнтований продукт. Кожен учасник команди вніс свою експертизу, щоб зробити проект максимально функціональним і зручним.
+## Детальна специфікація застосунків
 
-![FigJam](https://raw.githubusercontent.com/ArtemVlasov2009/DJANGO_QRCODE_GENERATOR/main/img_figjam/FigJam.png)
+Нижче описано кожен застосунок проєкту, його призначення, особливості та приклади коду.
+
+### 1. `base.html` — Початкова сторінка
+- **Мета**: Вітальна сторінка, яка знайомить користувача з проєктом і пропонує обрати план підписки.  
+- **Особливості**:  
+  - Вибір плану (Free, Standard, Pro, Desktop) через POST-запит.  
+  - Перенаправлення на авторизацію після вибору.  
+- **Приклад коду** (логіка у `views.py`):  
+  ```python
+  def render_home(request):
+      selected_plan = request.session.get('selected_plan', None)
+      if request.method == "POST":
+          selected_plan = request.POST.get("selected_plan")
+          if selected_plan in ['free', 'standard', 'pro', 'desktop']:
+              request.session['selected_plan'] = selected_plan
+              return redirect('authorization')
+      return render(request, 'base.html', {'selected_plan': selected_plan})
+  ```
+
+### 2. `registration.html` — Реєстрація
+- **Мета**: Дозволяє новим користувачам створити акаунт.  
+- **Особливості**:  
+  - Форма із полями для імені, пароля та email.  
+  - Перевірка унікальності імені та збереження в базі даних.  
+- **Унікальна механіка**: Реєстрація пов’язана з моделлю `Subscribers`, яка відстежує підписку та ліміт QR-кодів.  
+
+### 3. `authorization.html` — Авторизація
+- **Мета**: Забезпечує вхід у систему для зареєстрованих користувачів.  
+- **Особливості**:  
+  - Перевірка логіну, пароля та email через POST-запит.  
+  - Повідомлення про помилку, якщо дані некоректні.  
+- **Приклад коду** (HTML-форма):  
+  ```html
+  <form method="POST" action="{% url 'authorization' %}">
+      {% csrf_token %}
+      <input type="text" id="name" name="name" required>
+      <input type="password" id="password" name="password" required>
+      <input type="email" id="email-confirm" name="email-confirm" required>
+      <button type="submit">Авторизуватися</button>
+  </form>
+  ```
+
+Ось оновлений фрагмент вашого README.md із заміненим кодом у секції для `free.html`. Я вставив ваш Python-код замість попереднього HTML-прикладу:
+
 ---
 
-# Як запустити проект
+### 4. `free.html`, `standard.html`, `pro.html`, `desktop.html` — Сторінки генерації QR-кодів
+- **Мета**: Генерація QR-кодів залежно від обраного плану підписки.  
+- **Особливості**:  
+  - **Free**: базові функції (розмір, посилання).  
+  - **Standard**: додані кольори та форми.  
+  - **Pro**: логотипи, градієнти, більше розмірів.  
+  - **Desktop**: повний функціонал для локального використання.  
+- **Унікальна механіка**:  
+  - Збереження QR-кодів у базі даних із прив’язкою до користувача та плану.  
+  - Налаштування градієнтів, форм елементів і заокруглення кутів.  
+- **Приклад коду** (генерація у `free`):  
+  ```python
+  def render_free(request: HttpResponse):
+      # Перевірка, чи користувач авторизований
+      if not request.user.is_authenticated:
+          return redirect("authorization")  # Перенаправлення на сторінку авторизації, якщо не авторизований
 
-## Локально на комп’ютері
+      # Отримання або створення профілю підписника для поточного користувача
+      subscriber, created = Subscribers.objects.get_or_create(user=request.user)
 
-1. **Відкрийте проект у IDE**  
-   Завантажте проект із вашого репозиторію або розпакуйте його на комп’ютері. Відкрийте папку проекту у вашій інтегрованій середовищі розробки (IDE), наприклад, PyCharm, VS Code або іншій.
+      # Перевірка ліміту QR-кодів для безкоштовного плану
+      if subscriber.plan == 'free' and subscriber.qr_code_count >= 1:
+          return render(request, "free.html", {"show_limit_modal": True})  # Відображення модального вікна з повідомленням про ліміт
 
-2. **Встановіть необхідні модулі**  
-   Переконайтеся, що у вас встановлено Python. У терміналі IDE виконайте команду для встановлення всіх залежностей, які вказані у файлі `requirements.txt` (якщо такий є):
+      # Обробка POST-запиту (створення QR-коду)
+      if request.method == "POST":
+          # Отримання даних з форми
+          name = request.POST.get("name")  # Ім'я QR-коду
+          link = request.POST.get("link_or_text")  # Посилання або текст для QR-коду
+          size = int(request.POST.get("size", 300))  # Розмір QR-коду (за замовчуванням 300)
+          qr_color = request.POST.get("qr_color", "#000000")  # Колір QR-коду (за замовчуванням чорний)
+          bg_color = request.POST.get("bg_color", "#FFFFFF")  # Колір фону (за замовчуванням білий)
+          logo_file = request.FILES.get("logo")  # Файл логотипу (опціонально)
+          use_gradient = request.POST.get("gradient") == "on"  # Використовувати градієнт (так/ні)
+          color1 = request.POST.get("color1", "#ff0000")  # Перший колір градієнту (за замовчуванням червоний)
+          color2 = request.POST.get("color2", "#00ff00")  # Другий колір градієнту (за замовчуванням зелений)
+          shape = request.POST.get("shape", "square")  # Форма QR-коду (за замовчуванням квадрат)
+          round_corners = shape == "rounded"  # Чи заокруглені кути (так/ні)
+          element_shape = request.POST.get("element_shape", "square")  # Форма елементів
+
+          # Перевірка на заповненість обов'язкових полів
+          if not name or not link:
+              return render(request, "free.html", {"error": "Заповніть всі поля"})  # Повідомлення про помилку
+
+          try:
+              # Генерація QR-коду
+              qr = qrcode.QRCode(
+                  version=1,
+                  error_correction=qrcode.constants.ERROR_CORRECT_H,
+                  box_size=10,
+                  border=4,
+              )
+              qr.add_data(link)  # Додавання даних (посилання/текст) до QR-коду
+              qr.make(fit=True)  # Автоматичне налаштування розміру
+              img = qr.make_image(fill_color=qr_color, back_color=bg_color).convert("RGBA")  # Створення зображення QR-коду
+
+              # Зміна форми елементів QR-кода (кола, трикутники)
+              if element_shape == "circle":
+                  mask = Image.new("L", img.size, 0)
+                  draw = ImageDraw.Draw(mask)
+                  for x in range(0, img.size[0], qr.box_size):
+                      for y in range(0, img.size[1], qr.box_size):
+                          box = (x, y, x + qr.box_size, y + qr.box_size)
+                          draw.ellipse(box, fill=255)
+                  img.putalpha(mask)
+              elif element_shape == "triangle":
+                  mask = Image.new("L", img.size, 0)
+                  draw = ImageDraw.Draw(mask)
+                  for x in range(0, img.size[0], qr.box_size):
+                      for y in range(0, img.size[1], qr.box_size):
+                          box = [(x, y + qr.box_size), (x + qr.box_size // 2, y), (x + qr.box_size, y + qr.box_size)]
+                          draw.polygon(box, fill=255)
+                  img.putalpha(mask)
+
+              # Застосування градієнту
+              if use_gradient:
+                  gradient = Image.new("RGBA", img.size)
+                  draw = ImageDraw.Draw(gradient)
+                  for y in range(img.size[1]):
+                      r = int((1 - y / img.size[1]) * int(color1[1:3], 16) + (y / img.size[1]) * int(color2[1:3], 16))
+                      g = int((1 - y / img.size[1]) * int(color1[3:5], 16) + (y / img.size[1]) * int(color2[3:5], 16))
+                      b = int((1 - y / img.size[1]) * int(color1[5:7], 16) + (y / img.size[1]) * int(color2[5:7], 16))
+                      draw.line([(0, y), (img.size[0], y)], fill=(r, g, b, 255))
+                  qr_data = img.getdata()
+                  gradient_data = gradient.getdata()
+                  new_data = []
+                  for i in range(len(qr_data)):
+                      if qr_data[i][0] < 128:
+                          new_data.append(gradient_data[i])
+                      else:
+                          new_data.append((255, 255, 255, 0))
+                  img.putdata(new_data)
+
+              img = img.resize((size, size), Image.Resampling.LANCZOS)  # Зміна розміру зображення
+
+              # Заокруглення кутів
+              if round_corners:
+                  corner_radius = int(size * 0.1)
+                  qr_mask = Image.new('L', img.size, 0)
+                  draw = ImageDraw.Draw(qr_mask)
+                  qr_box = img.getbbox()
+                  draw.rounded_rectangle(qr_box, corner_radius, fill=255)
+                  output = Image.new('RGBA', img.size, (0, 0, 0, 0))
+                  output.paste(img, mask=qr_mask)
+                  img = output
+
+              # Додавання логотипу
+              if logo_file:
+                  try:
+                      logo = Image.open(logo_file).convert("RGBA")  # Відкриття та конвертація логотипу
+                      logo_size = int(size * 0.25)  # Розмір логотипу (25% від розміру QR-коду)
+                      logo = logo.resize((logo_size, logo_size), Image.Resampling.LANCZOS)  # Зміна розміру логотипу
+                      pos_x = (size - logo_size) // 2  # Позиція логотипу по X
+                      pos_y = (size - logo_size) // 2  # Позиція логотипу по Y
+                      logo_bg = Image.new('RGBA', (logo_size, logo_size), (255, 255, 255, 255))
+                      img.paste(logo_bg, (pos_x, pos_y))
+                      img.paste(logo, (pos_x, pos_y), logo)  # Вставка логотипу в центр QR-коду
+                  except Exception as e:
+                      print(f"Error processing logo: {e}")  # Виведення помилки
+
+              # Збереження QR-коду
+              buffer = BytesIO()
+              img.save(buffer, format="PNG")  # Збереження зображення у буфер
+              user_folder = os.path.join(settings.MEDIA_ROOT, request.user.username)  # Шлях до папки користувача
+              if not os.path.exists(user_folder):
+                  os.makedirs(user_folder)  # Створення папки користувача, якщо її не існує
+              file_path = os.path.join(user_folder, f"{name}.png")  # Повний шлях до файлу
+              with open(file_path, 'wb') as f:
+                  f.write(buffer.getvalue())  # Запис зображення з буфера у файл
+              qr_image_url = os.path.join(settings.MEDIA_URL, request.user.username, f"{name}.png")  # URL зображення
+
+              # Перевірка на унікальність імені QR-коду
+              if qr_code.objects.filter(name=name).exists():
+                  return render(request, "free.html", {"error": "QR-код із таким ім'ям вже існує"})  # Повідомлення про помилку
+
+              creation_time = timezone.now() + timedelta(hours=2)
+              # Збереження інформації про QR-код в базі даних
+              qr_code_instance = qr_code(
+                  name=name,
+                  link=link,
+                  size=size,
+                  shape=1 if round_corners else 0,
+                  custom_style="gradient" if use_gradient else "default",
+                  data_create=creation_time,
+                  expiry_date=(creation_time + timedelta(days=30)).timestamp(),
+                  image=qr_image_url,
+                  plan_created="free",  # Вказуємо, що QR-код створено за безкоштовним планом
+                  user=request.user  # Вказуємо користувача, який створив QR-код
+              )
+              qr_code_instance.save()  # Збереження об'єкта в базі даних
+
+              # Збільшення лічильника QR-кодів у профілі підписника
+              subscriber.qr_code_count += 1
+              subscriber.save()  # Збереження змін у профілі підписника
+
+              # Відображення QR-коду на сторінці
+              return render(request, "free.html", {"qr_image_url": qr_image_url})
+
+          except Exception as e:
+              print(f"Error generating QR code: {e}")  # Виведення помилки
+              return render(request, "free.html", {"error": "Помилка при генерації QR-коду"})  # Повідомлення про помилку
+
+      # Відображення сторінки free.html (при GET-запиті або після обробки POST-запиту)
+      return render(request, "free.html")
+  ```
+
+Цей код демонструє повний процес генерації QR-коду для сторінки `free.html`, включаючи перевірку авторизації, обробку форм, кастомізацію (градієнти, форми елементів, заокруглення кутів, логотипи) та збереження результату. Якщо вам потрібні додаткові пояснення чи зміни — дайте знати!
+- **Принцип роботи підписок**:  
+  - Кожен план має ліміт QR-кодів (`qr_code_limit` у моделі `Subscribers`).  
+  - При генерації перевіряється поточна кількість (`qr_code_count`) та доступність функцій.  
+
+---
+
+## Як запустити проєкт
+
+### Локально на комп’ютері
+1. **Завантажте проєкт**:  
+   Клонуйте репозиторій або розпакуйте архів. Відкрийте папку в IDE (наприклад, PyCharm).  
+2. **Встановіть залежності**:  
+   У терміналі виконайте:  
    ```bash
    pip install -r requirements.txt
    ```
-   Якщо список модулів наведено окремо (наприклад, у документації), встановіть їх вручну через `pip`, наприклад:
-   ```bash
-   pip install django requests
-   ```
-
-3. **Запустіть файл manage.py**  
-   Перейдіть у терміналі до папки, де знаходиться файл `manage.py`, і виконайте команду:
+   (Перелік: `django`, `requests`, `pillow` тощо).  
+3. **Запустіть сервер**:  
+   Виконайте:  
    ```bash
    python manage.py runserver
    ```
-   Після цього сервер запуститься локально, і ви зможете відкрити проект у браузері за адресою `http://127.0.0.1:8000` (або іншому порті, якщо він вказаний).
----
-## Віддалено на сервері
+   Відкрийте `http://127.0.0.1:8000` у браузері.  
 
-1. **Використовуйте хостинг PythonAnywhere**  
-   Зареєструйтесь або увійдіть на сайт [PythonAnywhere](https://www.pythonanywhere.com).
-
-2. **Завантажте проект**  
-   - Перейдіть у розділ "Files" на PythonAnywhere.  
-   - Завантажте папку з вашим проектом через інтерфейс або використайте Git, якщо проект розміщено в репозиторії.
-
-3. **Налаштуйте віртуальне оточення**  
-   - У розділі "Consoles" відкрийте Bash-консоль.  
-   - Створіть віртуальне оточення командою:  
-     ```bash
-     mkvirtualenv myenv --python=/usr/bin/python3
-     ```  
-   - Встановіть необхідні модулі у віртуальному оточенні:  
-     ```bash
-     pip install -r requirements.txt
-     ```
-
-4. **Налаштуйте веб-додаток**  
-   - У розділі "Web" натисніть "Add a new web app".  
-   - Виберіть "Manual configuration" та вкажіть Python-версію.  
-   - У файлі конфігурації (наприклад, `wsgi.py`) вкажіть шлях до вашого проекту.  
-   - Укажіть шлях до віртуального оточення в налаштуваннях.
-
-5. **Запустіть сервер**  
-   - Після збереження налаштувань натисніть "Reload" у розділі "Web". Ваш проект стане доступним за наданою PythonAnywhere URL-адресою (наприклад, `yourusername.pythonanywhere.com`).
-
----
-## В нашому проекті є декілька окремих застосунків, а саме / Our project has several specific applications, namely:
-
-- **base.html** - Це початкова сторінка
-- **registration.html** - Це сторінка яка відповідає за реєстрацію
-- **authorization.html** - Це сторінка яка відповідає за авторизацію
-- **free.html**, **standart.html**, **pro.html**, **desktop.html** - Це сторінки які відповідають за генерацію кодів з різною пропискою
----
-
-## Структура коду
-
-### Приклад функції рендеру сторінки (`render_home`)
-
-```python
-def render_home(request):
-    # Отримуємо обраний план із сесії, якщо він є
-    selected_plan = request.session.get('selected_plan', None)
-    
-    # Перевіряємо, чи був відправлений POST-запит
-    if request.method == "POST":
-        selected_plan = request.POST.get("selected_plan")
-        # Перевіряємо, чи обраний план є валідним
-        if selected_plan in ['free', 'standard', 'pro', 'desktop']:
-            # Зберігаємо план у сесії
-            request.session['selected_plan'] = selected_plan
-            # Перенаправляємо на сторінку авторизації
-            return redirect('authorization')
-    
-    # Рендеримо початкову сторінку з передачею обраного плану
-    return render(request, 'base.html', {'selected_plan': selected_plan})
-```
-
----
-
-### Приклад HTML-шаблону (`authorization.html`)
-
-```html
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Сторінка авторизації{% endblock %}</title>
-    <!-- Підключаємо стилі -->
-    <link rel="stylesheet" href="{% static 'css/authorization.css' %}">
-    <!-- Іконка сайту -->
-    <link rel="icon" href="{% static 'images/Logo.png' %}" type="image/png">
-</head>
-<body>
-    {% block content %}
-    <header class="header_main">
-        <!-- Логотип із посиланням на головну -->
-        <a class="home_url" href="{% url 'home' %}">
-            <img class="Logo_img" src="{% static 'images/Logo.png' %}" alt="Logo">
-        </a>
-        <!-- Навігація -->
-        <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}current-page{% endif %}">Головна</a>
-        <a href="{% url 'registration' %}" class="{% if request.resolver_match.url_name == 'registration' %}current-page{% endif %}">Реєстрація</a>
-        <a href="{% url 'authorization' %}" class="{% if request.resolver_match.url_name == 'authorization' %}current-page{% endif %}">Авторизація</a>
-        <a href="{% url 'contacts' %}" class="{% if request.resolver_match.url_name == 'contacts' %}current-page{% endif %}">Контакти</a>
-    </header>
-    <div class="registration-container">
-        <h1>Авторизація</h1>
-        <!-- Форма авторизації -->
-        <form method="POST" action="{% url 'authorization' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="name">Ім'я користувача:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Пароль:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="email-confirm">Підтвердження через Email:</label>
-                <input type="email" id="email-confirm" name="email-confirm" required>
-                {% if user == None %}
-                <p class="Proverka_login_password">Логін або пароль некоректні</p>
-                {% endif %}
-            </div>
-            <!-- Посилання на реєстрацію -->
-            <p class="Not_reg">Не маєте аккаунта? <a class="reg_reg_btn" href="{% url 'registration' %}">Зареєструйтесь</a></p>
-            <button type="submit" class="register-btn">Авторизуватися</button>
-        </form>
-    </div>
-    {% endblock %}
-</body>    
-</html>
-```
-
----
-
-### Моделі (`models.py`)
-
-```python
-from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone  
-import time
-
-class Subscribers(models.Model):
-    # Зв’язок із моделлю User (один до одного)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    subscriber = models.CharField(max_length=255)  # Ім’я підписника
-    qr_code_count = models.IntegerField(default=0)  # Кількість згенерованих QR-кодів
-    plan = models.CharField(max_length=10, default='free')  # План підписки
-    qr_code_limit = models.IntegerField(default=10)  # Ліміт QR-кодів
-    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Баланс користувача
-
-    def __str__(self):
-        return self.subscriber
-
-class qr_code(models.Model):
-    # Зв’язок із моделлю User (багато до одного)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    name = models.CharField(max_length=255, null=True, blank=True)  # Назва QR-коду
-    link = models.URLField(max_length=2000, default='http://127.0.0.1:8000/')  # Посилання в QR-коді
-    size = models.IntegerField(default=300)  # Розмір QR-коду
-    shape = models.IntegerField(default=0)  # Форма QR-коду
-    custom_style = models.CharField(max_length=50, default="default")  # Стиль QR-коду
-    data_create = models.DateTimeField(default=timezone.now, null=False)  # Дата створення
-    expiry_date = models.FloatField(default=time.time)  # Дата закінчення дії
-    image = models.CharField(max_length=500, null=True, blank=True)  # Шлях до зображення
-    plan_created = models.CharField(max_length=50, default="free")  # План, за яким створено QR-код
-
-    def __str__(self):
-        return self.name or "Unnamed QR Code"
-```
-
----
-
-### Налаштування URL (`urls.py`)
-
-```python
-from django.contrib import admin
-from django.urls import path
-from home.views import *
-from django.conf import settings
-from django.conf.urls.static import static
-from home import views
-
-urlpatterns = [
-    # Адмін-панель
-    path('admin/', admin.site.urls),
-    # Головна сторінка
-    path('', render_home, name='home'),
-    # Реєстрація
-    path('registration/', render_registration, name='registration'),
-    # Авторизація
-    path('authorization/', render_authorization, name='authorization'),
-    # Вихід із системи
-    path('logout/', logout_user, name="logout"),
-    # Контакти
-    path('contacts/', render_contacts, name='contacts'),
-    # Генератор QR-кодів
-    path('generator/', render_generator, name='generator'),
-    # Історія генерацій
-    path('history_gen/', render_history_gen, name='history_generations'),
-    # Плани підписки
-    path('free/', render_free, name='free'),
-    path('standart/', render_standard, name='standart'),
-    path('pro/', render_pro, name='pro'),
-    # Видалення QR-коду
-    path('delete_qr_code/<int:qr_id>/', views.delete_qr_code, name='delete_qr_code'),
-    # Вибір плану
-    path('choose_plan/', choose_plan, name='choose_plan'),
-    # Desktop-версія
-    path('desktop/', render_desktop, name='desktop'),
-    # Головна для авторизованих
-    path('home_auth/', render_home_auth, name='home_auth'),
-    # Сторінка прострочених QR-кодів
-    path('qr-expired/', views.qr_expired, name='qr_expired'),
-    # Перенаправлення за QR-кодом
-    path('create_code/<int:pk>/', views.render_redirect, name='render_redirect'),
-]
-
-# Додаємо статичні файли у режимі дебагу
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-```
-
----
-
-### Приклад сторінки підписки (`pro.html`)
-
-```html
-{% load static %}
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сторінка генерації</title>
-    <!-- Підключаємо стилі -->
-    <link rel="stylesheet" href="{% static 'css/pro.css' %}">
-    <!-- Іконка сайту -->
-    <link rel="icon" href="{% static 'images/Logo.png' %}" type="image/png">
-</head>
-<body>
-    <header class="header_main">
-        <!-- Логотип із посиланням -->
-        <a class='home_url' href="http://127.0.0.1:8000/home_auth">
-            <img class="Logo_img" src="{% static 'images/Logo.png' %}" alt="Logo" />
-        </a>
-        <!-- Навігація -->
-        <a href="http://127.0.0.1:8000/home_auth" class="{% if request.path == '/' %}current-page{% endif %}">Головна</a>
-        <a href="{% url 'generator' %}" class="{% if request.path == '/generator/' %}current-page{% endif %}">Кодогенерація</a>
-        <a href="{% url 'history_generations' %}" class="{% if request.path == '/history_generations/' %}current-page{% endif %}">Генерації</a>
-        <a href="{% url 'contacts' %}" class="{% if request.path == '/contacts/' %}current-page{% endif %}">Контакти</a>
-        <!-- Кнопка виходу -->
-        <div class="logout">
-            <a class="logout_кнопка" href="{% url 'logout' %}">Вийти: {{ request.user.username }}</a>
-        </div>
-    </header>
-    <div class="Generator_frame">
-        <div class="Generator_header">
-            <p>Згенеруйте ваш QR code</p>
-        </div>
-        <div class="Generator_internal_frame">
-            <!-- Форма для генерації -->
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <label for="name">Ім'я:</label>
-                <input type="text" id="name" name="name" required><br><br>
-                <label for="link_or_text">Посилання або текст:</label>
-                <input type="text" id="link_or_text" name="link_or_text" required><br><br>
-                <label for="size">Розмір генерації QR-коду:</label>
-                <select id="size" name="size">
-                    <option value="200">200x200</option>
-                    <option value="300">300x300</option>
-                    <option value="400">400x400</option>
-                    <option value="500">500x500</option>
-                </select><br><br>
-                <label for="qr_color">Колір QR-коду:</label>
-                <input type="color" id="qr_color" name="qr_color" value="#000000"><br><br>
-                <label for="bg_color">Колір фону:</label>
-                <input type="color" id="bg_color" name="bg_color" value="#FFFFFF"><br><br>
-                <label for="logo">Додати логотип:</label>
-                <input type="file" id="logo" name="logo" accept="image/*"><br><br>
-                <label for="gradient">Налаштувати градієнт:</label>
-                <input type="checkbox" id="gradient" name="gradient"><br><br>
-                <!-- Налаштування градієнту -->
-                <div id="gradient-colors" style="display: none;">
-                    <label for="color1">Колір 1 градієнту:</label>
-                    <input type="color" id="color1" name="color1" value="#ff0000"><br><br>
-                    <label for="color2">Колір 2 градієнту:</label>
-                    <input type="color" id="color2" name="color2" value="#00ff00"><br><br>
-                </div>
-                <label for="shape">Форма QR-коду:</label><br>
-                <label><input type="radio" name="shape" value="rounded" checked> З закругленими кутами</label><br>
-                <label><input type="radio" name="shape" value="square"> Квадратна форма</label><br><br>
-                <label for="element_shape">Форма елементів QR-коду:</label><br>
-                <label><input type="radio" name="element_shape" value="circle" checked> Кружки</label><br>
-                <label><input type="radio" name="element_shape" value="triangle"> Трикутники</label><br>
-                <label><input type="radio" name="element_shape" value="square"> Квадрати</label><br><br>
-                <button class="Buttom_Down" type="submit">Генерувати</button>
-            </form>
-            <!-- Відображення QR-коду -->
-            <div class="qr-code-overlay">
-                <h2>Ваш QR-код:</h2>
-                <div style="width: 200px; height: 200px; overflow: hidden;">
-                    {% if qr_image_url %}
-                        <img src="{{ qr_image_url }}" alt="QR-код" id="qr-code-img" style="width: 200px; height: 200px; object-fit: contain;">
-                    {% else %}
-                        <img src="{% static 'images/qrCodeExample.png' %}" alt="Placeholder" id="qr-code-placeholder" style="width: 200px; height: 200px; object-fit: contain;">
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Скрипт для показу/приховування градієнту -->
-    <script>
-        document.getElementById('gradient').addEventListener('change', function() {
-            const gradientColors = document.getElementById('gradient-colors');
-            gradientColors.style.display = this.checked ? 'block' : 'none';
-        });
-    </script>
-</body>
-</html>
-```
-
----
-
-## Чому SQLite3?
-
-- **Вбудована в Python**: не потребує додаткового встановлення.  
-- **Простота**: вся база даних зберігається в одному файлі.  
-- **Досвід**: ми вже працювали з SQLite3 раніше.  
-- **Гнучкість**: для Flask можуть знадобитися міграції, але для базового використання достатньо одного файлу.
-
----
-
-## Дизайн у Figma
-
-Прототип дизайну доступний за посиланням:  
-[Figma - QR Code Generator Project](https://www.figma.com/design/DdHVri8QFYcHu0aAtPD0YH/QR-Code-Generator-Project?node-id=223-92&t=ud8Q13eHWrrlpWDk-0)
+### Віддалено на сервері (PythonAnywhere)
+1. **Реєстрація**:  
+   Створіть акаунт на [PythonAnywhere](https://www.pythonanywhere.com).  
+2. **Завантажте проєкт**:  
+   У розділі "Files" завантажте папку проєкту або клонуйте з GitHub.  
+3. **Налаштуйте віртуальне оточення**:  
+   У Bash-консолі:  
+   ```bash
+   mkvirtualenv myenv --python=/usr/bin/python3
+   pip install -r requirements.txt
+   ```  
+4. **Налаштуйте веб-додаток**:  
+   У розділі "Web" додайте новий додаток, виберіть "Manual configuration", вкажіть шлях до `wsgi.py` та віртуального оточення.  
+5. **Запустіть**:  
+   Натисніть "Reload" — проєкт доступний за URL (наприклад, `username.pythonanywhere.com`).  
 
 ---
 
 ## Висновки
 
-Під час роботи над проектом ми:  
-- Дізналися багато нового про розробку веб-сайтів.  
-- Освоїли сучасні технології (Django, SQLite3 тощо).  
-- Покращили навички командної роботи та розуміння коду.  
+### Користь першого проєкту на Django
+Цей проєкт став для нас важливим кроком у вивченні веб-розробки:  
+- Освоїли **Django** як потужний фреймворк для створення веб-додатків.  
+- Покращили навички роботи з **SQLite3** і зрозуміли принципи баз даних.  
+- Навчилися інтегрувати фронтенд (HTML, CSS, JS) із бекендом.  
+- Розвинули вміння працювати в команді через GitHub.  
 
+### Труднощі розробки
+- Налаштування кастомізації QR-кодів (градієнти, логотипи) вимагало інтеграції бібліотеки **PIL**.  
+- Синхронізація фронтенду й бекенду для динамічних форм була викликом.  
+- Оптимізація роботи з базою даних для великих обсягів QR-кодів.  
 
+### Перспективи розвитку
+- **Інтеграція API**: можливість генерувати QR-коди через зовнішні запити.  
+- **Розширення підписок**: нові функції (анімація, 3D-ефекти).  
 
+Цей проєкт — лише початок, і ми бачимо великий потенціал для його вдосконалення!
