@@ -55,7 +55,7 @@
   Прототип дизайну інтерфейсу, який відображає структуру та стиль сторінок.  
 
 - **FigJam**:  
-  [FigJam](https://raw.githubusercontent.com/ArtemVlasov2009/DJANGO_QRCODE_GENERATOR/main/img_figjam/FigJam.png)  
+  ![Схема FigJam](https://raw.githubusercontent.com/ArtemVlasov2009/DJANGO_QRCODE_GENERATOR/main/img_figjam/FigJam.png)  
   Схема планування проєкту, яка допомогла нам організувати задачі та ідеї.  
 
 ---
