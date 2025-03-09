@@ -80,7 +80,7 @@
 
 Цей набір технологій дозволив нам створити швидкий, надійний і користувацьки орієнтований продукт. Кожен учасник команди вніс свою експертизу, щоб зробити проект максимально функціональним і зручним.
 
-![alt text](https://github.com/ArtemVlasov2009/qr_working_project/blob/main/FigJam.png "FigJam")
+![alt text]([https://github.com/ArtemVlasov2009/qr_working_project/blob/main/](https://github.com/ArtemVlasov2009/DJANGO_QRCODE_GENERATOR/edit/main/FigJam.png "FigJam")
 ---
 
 # Як запустити проект
