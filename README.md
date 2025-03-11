@@ -33,12 +33,12 @@
 
 - **Артем Власов (Team Lead)**  
   - Роль: Керівник команди, фронтенд-розробник, дизайнер інтерфейсу.  
-  - GitHub: [ArtemVlasov2009](https://github.com/ArtemVlasov2009)  
+  - GitHub: [ArtemVlasov2009]([https://github.com/ArtemVlasov2009](https://github.com/ArtemVlasov2009/DJANGO_QRCODE_GENERATOR))  
   - Відповідальність: архітектура проєкту, дизайн, основний функціонал.  
 
 - **Ткач Богдан**  
   - Роль: Бекенд-розробник, спеціаліст із баз даних.  
-  - GitHub: [Bogdantkach12](https://github.com/Bogdantkach12)  
+  - GitHub: [Bogdantkach12]([https://github.com/Bogdantkach12](https://github.com/Bogdantkach12/Qr_code_generator))  
   - Відповідальність: логіка генерації QR-кодів, робота з базою даних SQLite3.  
 
 - **Іван Єжов**  
